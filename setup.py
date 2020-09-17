@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="simple_background_task",
-    version="0.1.0",
+    version="0.1.1",
     author="fallthrough",
     author_email="rainbroadcast@gmail.com",
     description="A background task base on thread,easy to integer with any framework",
@@ -18,5 +18,8 @@ setuptools.setup(
         'Programming Language :: Python :: 3',
     ],
     install_requires=[
-    ]
+    ],
+    extras_require={
+        "rocketmq": []
+    }
 )

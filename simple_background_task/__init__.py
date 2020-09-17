@@ -5,11 +5,9 @@
 import threading
 import logging
 import traceback
-from concurrent.futures import ThreadPoolExecutor
 from simple_background_task.queue.interface import QueueInterface
 from simple_background_task.queue.memory import MemoryQueue
 from simple_background_task.task import Task
-
 
 LOGGER = logging.getLogger("background_task")
 
@@ -25,9 +23,8 @@ class BackgroundTask(threading.Thread):
     _instance = None
     _running = True
 
-    def __init__(self, store: str = "memory", workers: int = 3, *args, **kwargs):
+    def __init__(self, store: str = "memory", *args, **kwargs):
         self._store = store
-        self._thread_pool = ThreadPoolExecutor(workers)
         self._queue = self.choose_queue_backend_factory()
         super().__init__(*args, **kwargs)
 
@@ -48,7 +45,7 @@ class BackgroundTask(threading.Thread):
             else:
                 LOGGER.info("finished background task:%s", to_do_task)
 
-    def __new__(cls, store: str = "memory", workers: int = 3, *args, **kwargs):
+    def __new__(cls, store: str = "memory", *args, **kwargs):
         if cls._instance is None:
             cls._instance = super().__new__(cls, *args, **kwargs)
         return cls._instance
